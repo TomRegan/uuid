@@ -18,18 +18,25 @@ package uu.id
 
 import java.lang.Long.toBinaryString
 import java.time.Instant
-import java.util.*
 import java.util.UUID
+import kotlin.ByteArray
+import kotlin.Comparator
+import kotlin.ExperimentalUnsignedTypes
+import kotlin.Long
+import kotlin.String
+import kotlin.Suppress
+import kotlin.UnsupportedOperationException
+import kotlin.assert
 
 @Suppress("unused") object UUIDs {
 
     private val nilUUID = UUID(0, 0)
 
     enum class NS(val namespace: UUID) {
-        DNS(UUID.fromString("6ba7b810-9dad-11d1-80b4-00c04fd430c8")),
-        URL(UUID.fromString("6ba7b811-9dad-11d1-80b4-00c04fd430c8")),
-        OID(UUID.fromString("6ba7b812-9dad-11d1-80b4-00c04fd430c8")),
-        X500(UUID.fromString("6ba7b814-9dad-11d1-80b4-00c04fd430c8"))
+        DNS(uuid("6ba7b810-9dad-11d1-80b4-00c04fd430c8")),
+        URL(uuid("6ba7b811-9dad-11d1-80b4-00c04fd430c8")),
+        OID(uuid("6ba7b812-9dad-11d1-80b4-00c04fd430c8")),
+        X500(uuid("6ba7b814-9dad-11d1-80b4-00c04fd430c8"))
     }
 
     // Utilities for Version 1 UUID timestamps
@@ -96,7 +103,7 @@ import java.util.UUID
 
     // Version 5
 
-    @JvmStatic fun sha1UUID(namespace: NS, name: String): UUID = rfc4122Version5(namespace, name)
+    @JvmStatic fun sha1UUID(namespace: NS, name: String): UUID = v5UUID(namespace, name)
 
     @JvmStatic fun v5UUID(namespace: NS, name: String): UUID = rfc4122Version5(namespace, name)
 

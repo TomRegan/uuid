@@ -31,15 +31,13 @@ import static uu.id.UUIDs.*;
 
 class UUIDsTest {
 
-    @Test
-    void realTimestamp() {
+    @Test void realTimestamp() {
         Instant expected = Instant.parse("2018-05-27T17:43:10.101Z");
         Instant actual = UUIDs.realTimestamp(137467357901010000L);
         assertEquals(expected, actual);
     }
 
-    @Test
-    void timestamp() {
+    @Test void timestamp() {
         assertAll(
                 () -> assertThrows(UnsupportedOperationException.class, () -> UUIDs.realTimestamp(nilUUID())),
                 () -> assertThrows(UnsupportedOperationException.class, () -> UUIDs.realTimestamp(v3UUID(NS.URL, "test"))),
@@ -48,8 +46,7 @@ class UUIDsTest {
                 () -> assertDoesNotThrow(() -> UUIDs.realTimestamp(timeBasedUUID())));
     }
 
-    @Test
-    void versions() {
+    @Test void versions() {
         assertAll(
                 () -> assertEquals(0, nilUUID().version(), "v0"),
                 () -> assertEquals(1, v1UUID().version(), "v1"),
@@ -58,8 +55,7 @@ class UUIDsTest {
                 () -> assertEquals(5, v5UUID(NS.URL, "test").version(), "v5"));
     }
 
-    @Test
-    void variants() {
+    @Test void variants() {
         assertAll(
                 () -> assertEquals(0, nilUUID().variant(), "v0"),
                 () -> assertEquals(2, v1UUID().variant(), "v1"),
@@ -68,8 +64,7 @@ class UUIDsTest {
                 () -> assertEquals(2, v5UUID(NS.URL, "test").variant(), "v5"));
     }
 
-    @Test
-    void comparator() {
+    @Test void comparator() {
         // https://bugs.java.com/bugdatabase/view_bug.do?bug_id=7025832
         // JDK's UUID#compareTo is intentionally incorrect since inception
         // this test case demonstrates an edge case where signed comparison
@@ -89,8 +84,7 @@ class UUIDsTest {
     }
 
     @SuppressWarnings("EqualsWithItself")
-    @Test
-    void v1ComparableSequence() {
+    @Test void v1ComparableSequence() {
         UUID oldest = timeBasedUUID();
         UUID same = timeBasedUUID();
         UUID latest = timeBasedUUID();
@@ -103,8 +97,7 @@ class UUIDsTest {
         assertThat(uuids, contains(oldest, latest));
     }
 
-    @Test
-    void v3CanonicalValues() {
+    @Test void v3CanonicalValues() {
         assertAll(
                 () -> assertEquals(uuid("1cf93550-8eb4-3c32-a229-826cf8c1be59"), v3UUID(NS.URL, "test")),
                 () -> assertEquals(uuid("45a113ac-c7f2-30b0-90a5-a399ab912716"), v3UUID(NS.DNS, "test")),
@@ -112,8 +105,7 @@ class UUIDsTest {
                 () -> assertEquals(uuid("d9c53a66-fde2-3d04-b5ad-dce3848df07e"), v3UUID(NS.X500, "test")));
     }
 
-    @Test
-    void v5CanonicalValues() {
+    @Test void v5CanonicalValues() {
         assertAll(
                 () -> assertEquals(uuid("da5b8893-d6ca-5c1c-9a9c-91f40a2a3649"), v5UUID(NS.URL, "test")),
                 () -> assertEquals(uuid("4be0643f-1d98-573b-97cd-ca98a65347dd"), v5UUID(NS.DNS, "test")),
